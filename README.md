@@ -1,3 +1,3 @@
-### mysql_cluster:
+### mysql_cluster: make cluster with 3 nodes
 
-Make cluster with 3 nodes
+
