@@ -1,3 +1,3 @@
-## Make MySQL cluster with 3 nodes </br>
+## Make mysql cluster with 3 nodes </br>
 
 
