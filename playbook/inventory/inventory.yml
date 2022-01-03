@@ -1,0 +1,13 @@
+---
+all:
+  hosts:
+    10.10.1.111:
+      ansible_connection: ssh
+      ansible_user: root
+    10.10.1.112:
+      ansible_connection: ssh
+      ansible_user: root
+    10.10.1.113:
+      ansible_connection: ssh
+      ansible_user: root
+

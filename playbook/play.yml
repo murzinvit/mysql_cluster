@@ -1,0 +1,57 @@
+---
+- name: Install Mysql Galera cluster
+  hosts: all
+  become: true
+  tasks:
+    - name: Bootstrap a host without python2 installed
+      raw: apt install -y python3
+      tags: install_python
+    - name: Copy sources.list to /etc/apt/sources.list
+      template:
+        src: sources.list.j2
+        dest: /etc/apt/sources.list
+    - name: Add an apt key by id from a keyserver
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: BC19DDBA
+    - name: Copy galera.list to /etc/apt/sources.list.d/galera.list
+      template:
+        src: galera.list.j2
+        dest: /etc/apt/sources.list.d/galera.list
+      tags: galera_list
+    - name: Copy galera.pref to /etc/apt/preferences.d/galera.pref
+      template:
+        src: galera.pref.j2
+        dest: /etc/apt/preferences.d/galera.pref
+    - name: Update repositories cache
+      apt:
+        update_cache: yes
+      tags: update_cache
+    - name: Istall Galera 3
+      apt:
+        name: galera-3
+        state: present
+    - name: Istall mysql-wsrep-5.7
+      apt:
+        name: mysql-wsrep-5.7
+        state: present
+    - name: Copy galera.cnf to /etc/mysql/conf.d/galera.cnf
+      template:
+        src: galera.{{ ansible_nodename }}.cnf.j2
+        dest: /etc/mysql/conf.d/galera.cnf
+    - name: Enable service mysql, and not touch the state
+      service:
+        name: mysql
+        enabled: yes
+    - name: Run mysqld on node-1
+      shell: mysqld_bootstrap 
+      when: ansible_nodename == "test-1"
+    - name: Start service mysql, if not started
+      service:
+        name: mysql
+        state: started        
+
+      
+
+
+
