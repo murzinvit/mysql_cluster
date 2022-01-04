@@ -1,0 +1,4 @@
+#!/bin/bash
+sshpass ssh root@10.10.1.111 shutdown -h now
+sshpass ssh root@10.10.1.112 shutdown -h now
+sshpass ssh root@10.10.1.113 shutdown -h now
