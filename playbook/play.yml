@@ -10,6 +10,9 @@
       template:
         src: sources.list.j2
         dest: /etc/apt/sources.list
+    - name: Update repositories cache
+      apt:
+        update_cache: yes
     - name: Add an apt key by id from a keyserver
       apt_key:
         keyserver: keyserver.ubuntu.com
@@ -39,6 +42,13 @@
       template:
         src: galera.{{ ansible_nodename }}.cnf.j2
         dest: /etc/mysql/conf.d/galera.cnf
+    - name: Create a symbolic link /etc/apparmor.d/usr.sbin.mysqld
+      file:
+        src: /etc/apparmor.d/usr.sbin.mysqld
+        dest: /etc/apparmor.d/disable/usr.sbin.mysqld
+        state: link
+    - name: Run apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+      shell: apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
     - name: Enable service mysql, and not touch the state
       service:
         name: mysql
