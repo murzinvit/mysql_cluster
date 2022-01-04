@@ -1,4 +1,4 @@
-## Creating mysql cluster with 3 nodes </br>
+## Creating mysql cluster with 3 nodes in Debian 10 Buster </br>
 Modify addresses to `inventory/inventory.yml` </br>
 Modify addresses and hostname in `templates/*.j2` </br>
 Modify hosts name in `play.yml` </br>
