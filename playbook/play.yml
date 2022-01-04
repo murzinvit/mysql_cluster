@@ -42,7 +42,7 @@
       template:
         src: galera.{{ ansible_nodename }}.cnf.j2
         dest: /etc/mysql/conf.d/galera.cnf
-    - name: Check that the somefile.conf exists
+    - name: Check that the /etc/apparmor.d/usr.sbin.mysqld exists
       stat:
         path: /etc/apparmor.d/usr.sbin.mysqld
       register: stat_result
